@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volta — Project Status Marzo 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --green: #00FF87; --green2: #00CC70; --dark: #0A0A0A;
+    --mid: #444444; --light: #888888; --bg: #F5F5F0;
+    --white: #ffffff; --gray: #E8E8E4;
+    --pending: #7a5c00; --live: #1a5c3a;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); min-height: 100vh; padding: 48px 32px; }
+  header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 56px; padding-bottom: 24px; border-bottom: 1px solid #d8d8d2; }
+  .logo-area h1 { font-size: 11px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: var(--light); margin-bottom: 6px; }
+  .logo-area h2 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--dark); letter-spacing: -1px; }
+  .logo-area h2 span { color: var(--green2); }
+  .meta { text-align: right; font-size: 12px; font-weight: 300; color: var(--light); letter-spacing: 0.5px; line-height: 1.8; }
+
+  .legend { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; padding: 18px 24px; background: var(--white); border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; color: var(--mid); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-live { background: var(--live); } .dot-pending { background: var(--pending); } .dot-soon { background: #1a3a5c; } .dot-main { background: var(--dark); }
+
+  .badge { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 1px; display: inline-block; margin-bottom: 6px; }
+  .badge-live { background: rgba(0,204,112,0.2); color: #00CC70; }
+  .badge-pending { background: rgba(122,92,0,0.2); color: #c8960a; }
+  .badge-soon { background: rgba(26,58,92,0.2); color: #4a7ab5; }
+
+  .diagram { display: flex; flex-direction: column; gap: 0; margin-bottom: 48px; }
+  .level-home { display: flex; justify-content: center; }
+  .home-node { background: var(--dark); color: white; padding: 20px 48px; text-align: center; position: relative; min-width: 300px; }
+  .home-node::after { content: ''; position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); width: 1px; height: 24px; background: #c0c0bc; }
+  .node-label { font-size: 10px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; opacity: 0.5; margin-bottom: 4px; }
+  .node-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
+  .node-slug { font-size: 10px; font-weight: 300; opacity: 0.5; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .node-tag { font-size: 10px; font-weight: 400; background: rgba(0,255,135,0.15); color: var(--green); padding: 3px 10px; display: inline-block; letter-spacing: 0.5px; }
+
+  .nav-level { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 24px; position: relative; }
+  .nav-level::before { content: ''; position: absolute; top: -24px; left: calc(100% / 12); right: calc(100% / 12); height: 1px; background: #c0c0bc; }
+  .nav-node { background: var(--dark); color: white; padding: 16px 14px; text-align: center; position: relative; text-decoration: none; display: block; transition: opacity 0.2s; }
+  .nav-node:hover { opacity: 0.85; }
+  .nav-node::before { content: ''; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 1px; height: 8px; background: #c0c0bc; }
+
+  .sub-grid { display: grid; gap: 8px; }
+  .sub-node { padding: 16px 18px; text-align: left; font-size: 11px; font-weight: 300; }
+  .sub-node-live { background: #1a2e1a; color: #e0f0e0; }
+  .sub-node-pending { background: #2a2010; color: #f0e0b0; }
+  .sub-node-soon { background: #10182a; color: #b0c8f0; }
+
+  .products-section { margin-bottom: 40px; }
+  .section-header { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--light); margin-bottom: 12px; padding-left: 4px; }
+
+  .flow-section { margin-bottom: 40px; }
+  .flow-title { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--light); margin-bottom: 12px; }
+  .flows { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .flow-card { background: var(--white); padding: 24px; border-top: 3px solid var(--gray); }
+  .flow-card h4 { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+  .flow-step { font-size: 12px; font-weight: 300; color: var(--mid); padding: 7px 0; border-bottom: 1px solid var(--gray); line-height: 1.5; }
+  .flow-step:last-child { border-bottom: none; }
+
+  .auto-section { margin-top: 48px; padding-top: 32px; border-top: 1px solid #d8d8d2; }
+  .auto-title { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--light); margin-bottom: 24px; }
+  .auto-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; background: var(--gray); margin-bottom: 32px; }
+  .auto-step { background: var(--white); padding: 24px 20px; margin: 1px; position: relative; }
+  .auto-step::after { content: '→'; position: absolute; right: -14px; top: 50%; transform: translateY(-50%); font-size: 16px; color: var(--green2); z-index: 2; background: var(--white); padding: 4px 2px; }
+  .auto-step:last-child::after { display: none; }
+  .auto-icon { font-size: 22px; margin-bottom: 12px; }
+  .auto-step-title { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .auto-step-desc { font-size: 11px; font-weight: 300; color: var(--mid); line-height: 1.6; }
+  .auto-tag { margin-top: 10px; font-size: 9px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; background: #f0f0ec; color: var(--mid); padding: 3px 8px; display: inline-block; }
+
+  .decisions-section { margin-top: 48px; padding-top: 32px; border-top: 1px solid #d8d8d2; }
+  .decisions-title { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--light); margin-bottom: 24px; }
+  .decisions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .decision-card { background: var(--white); padding: 24px; border-left: 3px solid var(--green2); }
+  .decision-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+  .decision-desc { font-size: 12px; font-weight: 300; color: var(--mid); line-height: 1.65; }
+  .decision-tag { margin-top: 12px; font-size: 9px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--green2); }
+
+  .stack-section { margin-top: 48px; padding-top: 32px; border-top: 1px solid #d8d8d2; }
+  .stack-title { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--light); margin-bottom: 24px; }
+  .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .stack-card { background: var(--white); padding: 20px; }
+  .stack-layer { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--green2); margin-bottom: 8px; }
+  .stack-tools { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 8px; line-height: 1.4; }
+  .stack-desc { font-size: 11px; font-weight: 300; color: var(--mid); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <h1>Project Status · Marzo 2026</h1>
+    <h2><span>Volta</span> — AI Training Analysis</h2>
+  </div>
+  <div class="meta">
+    getvolta.pro<br>
+    @volta_pro_bot · Telegram<br>
+    Colombia & LATAM · B2C
+  </div>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot dot-main"></div>Nodo principal</div>
+  <div class="legend-item"><div class="legend-dot dot-live"></div>Live en producción</div>
+  <div class="legend-item"><div class="legend-dot dot-pending"></div>Pendiente aprobación</div>
+  <div class="legend-item"><div class="legend-dot dot-soon"></div>Próximamente</div>
+</div>
+
+<!-- ARQUITECTURA WEB -->
+<div class="diagram">
+  <div class="level-home">
+    <div class="home-node">
+      <div class="node-label">Dominio principal</div>
+      <div class="node-title">getvolta.pro</div>
+      <div class="node-slug">Digital Ocean · Caddy · Cloudflare</div>
+      <div class="node-tag">SEO · GEO · og:locale · JSON-LD · SSL ✓</div>
+    </div>
+  </div>
+  <div class="nav-level">
+    <a href="https://getvolta.pro" target="_blank" style="text-decoration:none;">
+      <div class="nav-node">
+        <div class="node-label">ES</div>
+        <div class="node-title" style="font-size:13px;">Landing</div>
+        <div class="node-slug">/</div>
+        <span class="badge badge-live">Live</span>
+      </div>
+    </a>
+    <a href="https://getvolta.pro/en" target="_blank" style="text-decoration:none;">
+      <div class="nav-node">
+        <div class="node-label">EN</div>
+        <div class="node-title" style="font-size:13px;">Landing</div>
+        <div class="node-slug">/en</div>
+        <span class="badge badge-live">Live</span>
+      </div>
+    </a>
+    <a href="https://getvolta.pro/start" target="_blank" style="text-decoration:none;">
+      <div class="nav-node">
+        <div class="node-label">Onboarding</div>
+        <div class="node-title" style="font-size:13px;">Start</div>
+        <div class="node-slug">/start</div>
+        <span class="badge badge-live">Live</span>
+      </div>
+    </a>
+    <a href="https://getvolta.pro/privacy" target="_blank" style="text-decoration:none;">
+      <div class="nav-node">
+        <div class="node-label">ES</div>
+        <div class="node-title" style="font-size:13px;">Privacy</div>
+        <div class="node-slug">/privacy</div>
+        <span class="badge badge-live">Live</span>
+      </div>
+    </a>
+    <a href="https://getvolta.pro/privacy-en" target="_blank" style="text-decoration:none;">
+      <div class="nav-node">
+        <div class="node-label">EN</div>
+        <div class="node-title" style="font-size:13px;">Privacy</div>
+        <div class="node-slug">/privacy-en</div>
+        <span class="badge badge-live">Live</span>
+      </div>
+    </a>
+    <a href="https://getvolta.pro/status" target="_blank" style="text-decoration:none;">
+      <div class="nav-node">
+        <div class="node-label">API</div>
+        <div class="node-title" style="font-size:13px;">Status</div>
+        <div class="node-slug">/status</div>
+        <span class="badge badge-live">Live</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- INTEGRACIONES -->
+<div class="products-section">
+  <div class="section-header">Integraciones de dispositivos — API partners</div>
+  <div class="sub-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="sub-node sub-node-pending">
+      <span class="badge badge-pending">⏳ Pendiente aprobación</span>
+      <div class="node-title" style="font-size:13px; font-family:'Syne',sans-serif; font-weight:700; margin-top:4px;">Garmin Connect API</div>
+      <div class="node-slug" style="color:rgba(255,255,255,0.5); margin-top:4px;">Solicitud enviada: 21 marzo 2026</div>
+      <div style="margin-top:10px; font-size:10px; background:rgba(255,255,255,0.08); padding:5px 10px; color:rgba(255,255,255,0.6); letter-spacing:0.5px;">Webhook proxy activo: getvolta.pro/webhook/volta-garmin</div>
+    </div>
+    <div class="sub-node sub-node-pending">
+      <span class="badge badge-pending">⏳ Pendiente aprobación</span>
+      <div class="node-title" style="font-size:13px; font-family:'Syne',sans-serif; font-weight:700; margin-top:4px;">COROS API + Co-marketing</div>
+      <div class="node-slug" style="color:rgba(255,255,255,0.5); margin-top:4px;">Solicitud + co-marketing enviados: 25 marzo 2026</div>
+      <div style="margin-top:10px; font-size:10px; background:rgba(255,255,255,0.08); padding:5px 10px; color:rgba(255,255,255,0.6); letter-spacing:0.5px;">Webhook proxy activo: getvolta.pro/webhook/volta-coros</div>
+    </div>
+    <div class="sub-node sub-node-soon">
+      <span class="badge badge-soon">🔄 En evaluación</span>
+      <div class="node-title" style="font-size:13px; font-family:'Syne',sans-serif; font-weight:700; margin-top:4px;">Strava Extended Access</div>
+      <div class="node-slug" style="color:rgba(255,255,255,0.5); margin-top:4px;">Solicitud enviada a developers@strava.com</div>
+      <div style="margin-top:10px; font-size:10px; background:rgba(255,255,255,0.08); padding:5px 10px; color:rgba(255,255,255,0.6); letter-spacing:0.5px;">Diversificación de fuentes de datos de actividad</div>
+    </div>
+  </div>
+</div>
+
+<!-- ESTADO -->
+<div class="flow-section">
+  <div class="flow-title">Estado del proyecto — Marzo 2026</div>
+  <div class="flows">
+    <div class="flow-card" style="border-top-color: #1a5c3a;">
+      <h4 style="color:#1a5c3a;">✓ Live en producción</h4>
+      <div class="flow-step">6 páginas web — getvolta.pro (ES + EN)</div>
+      <div class="flow-step">SEO/GEO — og:locale, JSON-LD schema, canonical</div>
+      <div class="flow-step">Bot @volta_pro_bot activo en Telegram</div>
+      <div class="flow-step">Flujo onboarding n8n — registro + email bienvenida</div>
+      <div class="flow-step">Email transaccional — SPF + DKIM configurados</div>
+      <div class="flow-step">Identidad de marca completa — logo, favicon, OG image</div>
+      <div class="flow-step">Webhook proxy Caddy → n8n activo</div>
+    </div>
+    <div class="flow-card" style="border-top-color: #1a5c3a;">
+      <h4 style="color:#1a5c3a;">✓ Infraestructura técnica</h4>
+      <div class="flow-step">Digital Ocean + Caddy + Cloudflare (Full SSL)</div>
+      <div class="flow-step">n8n self-hosted en subdominio propio</div>
+      <div class="flow-step">Caddy: handle /webhook/* → reverse proxy n8n</div>
+      <div class="flow-step">DNS: MX · SPF · DKIM · Cloudflare proxied</div>
+      <div class="flow-step">Repositorio público GitHub</div>
+      <div class="flow-step">GitHub Actions auto-deploy (en configuración)</div>
+    </div>
+    <div class="flow-card" style="border-top-color: #7a5c00;">
+      <h4 style="color:#7a5c00;">⏳ Próximos pasos</h4>
+      <div class="flow-step">Garmin + COROS — esperando aprobación APIs</div>
+      <div class="flow-step">Activar OAuth de dispositivos en onboarding</div>
+      <div class="flow-step">Check-in introductorio día 1 (trigger n8n)</div>
+      <div class="flow-step">Migrar check-in de Gemini a Claude API (V2)</div>
+      <div class="flow-step">Checkout y cobros — lanzamiento junio 2026</div>
+      <div class="flow-step">Migración email a Google Workspace</div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTOMATIZACIÓN -->
+<div class="auto-section">
+  <div class="auto-title">Flujo de automatización — n8n · Onboarding + análisis semanal</div>
+  <div class="auto-flow">
+    <div class="auto-step">
+      <div class="auto-icon">🌐</div>
+      <div class="auto-step-title">Registro Web</div>
+      <div class="auto-step-desc">Atleta completa onboarding en getvolta.pro/start — 3 pasos: perfil, Telegram, dispositivo</div>
+      <div class="auto-tag">Form → Webhook</div>
+    </div>
+    <div class="auto-step">
+      <div class="auto-icon">⚙️</div>
+      <div class="auto-step-title">Orquestación n8n</div>
+      <div class="auto-step-desc">Parsea perfil, Telegram ID y dispositivo. Normaliza campos y prepara el registro</div>
+      <div class="auto-tag">Code node</div>
+    </div>
+    <div class="auto-step">
+      <div class="auto-icon">📊</div>
+      <div class="auto-step-title">Google Sheets</div>
+      <div class="auto-step-desc">Registra atleta en hoja "onboarding" — base de datos del piloto</div>
+      <div class="auto-tag">Append row</div>
+    </div>
+    <div class="auto-step">
+      <div class="auto-icon">📧</div>
+      <div class="auto-step-title">Email Bienvenida</div>
+      <div class="auto-step-desc">HTML personalizado desde start@getvolta.pro con próximos pasos y link al bot</div>
+      <div class="auto-tag">SendGrid API</div>
+    </div>
+    <div class="auto-step">
+      <div class="auto-icon">🤖</div>
+      <div class="auto-step-title">Check-in Semanal</div>
+      <div class="auto-step-desc">@volta_pro_bot envía check-in conversacional cada domingo. IA analiza datos + respuestas y entrega análisis personalizado</div>
+      <div class="auto-tag">Telegram + Gemini API</div>
+    </div>
+  </div>
+</div>
+
+<!-- DECISIONES ESTRATÉGICAS -->
+<div class="decisions-section">
+  <div class="decisions-title">Decisiones estratégicas de producto y go-to-market</div>
+  <div class="decisions-grid">
+    <div class="decision-card">
+      <div class="decision-title">Telegram sobre app nativa</div>
+      <div class="decision-desc">Sin costo de desarrollo de app, sin fricción de descarga. El check-in semanal vive donde el atleta ya está. Tiempo de respuesta: menos de 2 minutos.</div>
+      <div class="decision-tag">→ GTM sin fricciones</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-title">Privacy Policy en inglés desde el día 1</div>
+      <div class="decision-desc">Requerida por Garmin Connect y COROS para aprobar acceso a la API. Una política solo en español era un riesgo de rechazo inmediato antes de lanzar.</div>
+      <div class="decision-tag">→ API readiness</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-title">Co-marketing con COROS</div>
+      <div class="decision-desc">En la misma solicitud de API se incluyó una propuesta de co-marketing con fecha de lanzamiento. Acceso a la página de partners de COROS sin costo adicional.</div>
+      <div class="decision-tag">→ Distribución gratuita</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-title">Webhook proxy via Caddy</div>
+      <div class="decision-desc">Las APIs de Garmin y COROS ven getvolta.pro/webhook/* — nunca el subdominio de n8n. Credibilidad técnica sin infraestructura adicional.</div>
+      <div class="decision-tag">→ Infraestructura limpia</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-title">Landing EN antes de aplicar a APIs</div>
+      <div class="decision-desc">Las solicitudes a Garmin y COROS evalúan el producto en inglés. Tener getvolta.pro/en activo fue una decisión deliberada de preparación antes de aplicar.</div>
+      <div class="decision-tag">→ Credibilidad con partners</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-title">getvolta.pro — TLD estratégico</div>
+      <div class="decision-desc">El TLD .pro refuerza el posicionamiento "atleta serio" sin limitación geográfica. Coherente con la expansión a LATAM y sin conflictos de dominio.</div>
+      <div class="decision-tag">→ Posicionamiento de marca</div>
+    </div>
+  </div>
+</div>
+
+<!-- STACK -->
+<div class="stack-section">
+  <div class="stack-title">Stack tecnológico</div>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <div class="stack-layer">Infraestructura</div>
+      <div class="stack-tools">Digital Ocean · Caddy · Cloudflare</div>
+      <div class="stack-desc">Servidor VPS, web server con SSL automático, CDN y DNS. Stack compartido con proyecto paralelo — costo incremental mínimo para el piloto.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-layer">Automatización</div>
+      <div class="stack-tools">n8n · Google Sheets · SendGrid</div>
+      <div class="stack-desc">Orquestación de todos los flujos sin backend propio. Onboarding, check-in, análisis y reportes — sin intervención manual.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-layer">IA & Canal</div>
+      <div class="stack-tools">Gemini 2.5 Flash · Telegram Bot API</div>
+      <div class="stack-desc">Análisis conversacional de check-ins semanales. Migración a Claude API planificada para V2 — mejor calidad conversacional a mayor escala.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-layer">Web & Marca</div>
+      <div class="stack-tools">HTML · CSS · GitHub · Caddy file_server</div>
+      <div class="stack-desc">6 páginas estáticas con SEO/GEO completo. Identidad de marca desde cero — logo system, favicon, brand guidelines, OG image.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
