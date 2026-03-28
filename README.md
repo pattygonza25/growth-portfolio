@@ -31,7 +31,7 @@ B2C sports intelligence platform for runners, cyclists and triathletes in Colomb
 - Automated onboarding → Google Sheets → HTML welcome email via n8n (zero manual intervention)
 - Custom brand identity, logo system, favicon and Open Graph assets
 - API applications submitted to Garmin Connect and COROS developer programs
-- Financial model: 92% gross margin · breakeven at 4 subscribers · COP 17M projected revenue Year 1
+- Built to scale: automated onboarding, conversational AI check-in, device integrations with Garmin and COROS
 
 ---
 
