@@ -1,19 +1,11 @@
 # Growth Portfolio — Patricia González
-
 > Growth Manager · AI & Automation · B2B Digital Strategy
-
 ---
-
 ## About
-
 I design and implement growth systems that connect strategy with execution — from lead capture architecture and CRM integration to workflow automation and AI-powered processes.
-
 My focus is building infrastructure that scales: systems where the right data reaches the right person at the right time, without manual intervention.
-
 Currently working at the intersection of **growth strategy**, **marketing automation**, and **AI tooling**.
-
 ---
-
 ## Projects
 
 ### 🚪 [Bdoors.us — B2B Digital Growth Architecture](./bdoors-us/README.md)
@@ -29,12 +21,24 @@ End-to-end digital growth system for a European interior door supplier in the So
 
 ---
 
-*More projects coming soon — n8n automations, AI workflows, lead generation systems.*
+### ⚡ [Volta — AI-Powered Training Analysis for Athletes](./volta/README.md)
+**Stack:** n8n · Telegram Bot API · Gemini 2.5 Flash · Claude API · Digital Ocean · Caddy · Cloudflare · SendGrid
+
+B2C sports intelligence platform for runners, cyclists and triathletes in Colombia and LATAM. Volta connects with athletes' Garmin and COROS devices, runs a weekly conversational check-in via Telegram, and delivers personalized training analysis with concrete weekly recommendations — built from scratch without a dedicated engineering team.
+
+**Built and live:**
+- Full web in production (6 pages) — getvolta.pro — SEO/GEO optimized for Colombia and LATAM
+- Automated onboarding → Google Sheets → HTML welcome email via n8n (zero manual intervention)
+- Custom brand identity, logo system, favicon and Open Graph assets
+- API applications submitted to Garmin Connect and COROS developer programs
+- Financial model: 92% gross margin · breakeven at 4 subscribers · COP 17M projected revenue Year 1
 
 ---
 
-## Connect
+*More projects coming soon — n8n automations, AI workflows, lead generation systems.*
 
+---
+## Connect
 - 🌐 [LinkedIn](https://www.linkedin.com/in/patriciagonzalezpaublini/)
 - 📧 gonzalezpaublini@gmail.com
 - 🐙 [GitHub](https://github.com/pattygonza25)
