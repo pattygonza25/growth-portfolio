@@ -20,7 +20,7 @@ My work sits at the intersection of **growth strategy**, **marketing automation*
 
 ### ₿ [MiningStore — Full-Funnel Growth Strategy for Bitcoin Mining](./miningstore/README.md)
 
-**Stack:** WordPress · Zoho CRM · Zoho Campaigns · LinkedIn Ads · Meta Ads · Claude AI · n8n · Rank Math
+**Stack:** WordPress · Zoho CRM · Zoho Campaigns · LinkedIn Ads · ChatGPT · Perplexity · Rank Math
 
 End-to-end growth marketing strategy for a U.S.-based Bitcoin mining company ($15M+ revenue). Complete ICP repositioning from crypto enthusiasts to institutional investors and HNWIs — including content architecture, three-layer lifecycle email system, LinkedIn organic and paid strategy, lead magnets per segment, lead scraping automation, and pioneering GEO (Generative Engine Optimization) for AI-powered search.
 
