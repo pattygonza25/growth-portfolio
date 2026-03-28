@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bdoors — Project Status March 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #8B0000;
+    --dark: #222222;
+    --mid: #555555;
+    --light: #888888;
+    --bg: #f8f6f3;
+    --white: #ffffff;
+    --gray: #e8e4e0;
+    --green: #2d6a4f;
+    --blue: #1a3a5c;
+    --amber: #7a5c00;
+  }
+
+  body {
+    font-family: 'Raleway', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    min-height: 100vh;
+    padding: 48px 32px;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #d5cfc9;
+  }
+
+  .logo-area h1 {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 4px;
+  }
+
+  .logo-area h2 {
+    font-size: 28px;
+    font-weight: 200;
+    color: var(--dark);
+    letter-spacing: 1px;
+  }
+
+  .logo-area h2 span {
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .meta {
+    text-align: right;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--light);
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+    padding: 20px 24px;
+    background: var(--white);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* DIAGRAM */
+  .diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .level-home {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  .home-node {
+    background: var(--red);
+    color: white;
+    padding: 20px 40px;
+    text-align: center;
+    position: relative;
+    min-width: 280px;
+  }
+
+  .home-node::after {
+    content: '';
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 24px;
+    background: #c0b8b0;
+  }
+
+  .node-label {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+
+  .node-title {
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .node-slug {
+    font-size: 10px;
+    font-weight: 300;
+    opacity: 0.6;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .node-keyword {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    background: rgba(255,255,255,0.15);
+    padding: 3px 10px;
+    display: inline-block;
+  }
+
+  .h-connector {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 0 0;
+    position: relative;
+  }
+
+  .nav-level {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+    position: relative;
+  }
+
+  .nav-level::before {
+    content: '';
+    position: absolute;
+    top: -24px;
+    left: calc(100% / 10);
+    right: calc(100% / 10);
+    height: 1px;
+    background: #c0b8b0;
+  }
+
+  .node {
+    padding: 16px;
+    text-align: center;
+    position: relative;
+    cursor: default;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .node:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  .node::before {
+    content: '';
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 24px;
+    background: #c0b8b0;
+  }
+
+  .node-products { background: var(--dark); color: white; }
+  .node-contact { background: var(--red); color: white; }
+  .node-projects { background: #3d3530; color: white; }
+  .node-guides { background: var(--blue); color: white; }
+  .node-home-link { background: #4a4440; color: white; }
+
+  .products-section {
+    margin-top: 40px;
+  }
+
+  .section-header {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--light);
+    text-align: center;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #d5cfc9;
+  }
+
+  .sub-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .sub-grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+  .sub-node {
+    padding: 14px 12px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+
+  .sub-node:hover { transform: translateY(-2px); }
+
+  .sub-node-product { background: #3a3a3a; color: white; }
+  .sub-node-blog { background: #1a3a5c; color: white; }
+  .sub-node-landing { background: #5a2a00; color: white; }
+
+  .badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    margin-bottom: 6px;
+  }
+
+  .badge-live { background: #e8f5e9; color: #2d6a4f; }
+  .badge-ads { background: #fff3e0; color: #7a5c00; }
+
+  /* FLOW SECTION */
+  .flow-section {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid #d5cfc9;
+  }
+
+  .flow-title {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 24px;
+  }
+
+  .flows {
+    display: grid;
+    gap: 16px;
+  }
+
+  .flow-card {
+    background: var(--white);
+    padding: 20px;
+    border-left: 3px solid var(--red);
+  }
+
+  .flow-card h4 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  .flow-num {
+    background: var(--red);
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* CRM SECTION */
+  .crm-section {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid #d5cfc9;
+  }
+
+  .crm-title {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 24px;
+  }
+
+  .crm-flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    align-items: center;
+    background: var(--white);
+    padding: 24px;
+  }
+
+  .crm-step {
+    text-align: center;
+    padding: 16px 12px;
+    position: relative;
+  }
+
+  .crm-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--red);
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .crm-icon { font-size: 24px; margin-bottom: 8px; }
+
+  .crm-step-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--dark);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .crm-step-desc {
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  .crm-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    margin-top: 6px;
+    background: #fff3e0;
+    color: #7a5c00;
+  }
+
+  .tag-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .tag-item {
+    background: #f8f6f3;
+    border: 1px solid #e0d8d0;
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--mid);
+    letter-spacing: 0.5px;
+  }
+
+  .tag-item span {
+    display: block;
+    font-size: 9px;
+    color: var(--red);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #d5cfc9;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--light);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <h1>Estado del Proyecto</h1>
+    <h2><span>B</span>doors — Estrategia Digital 2026</h2>
+  </div>
+  <div class="meta">
+    bdoors.us<br>
+    South Florida<br>
+    Marzo 2026
+  </div>
+</header>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#8B0000"></div> Conversión / CTA</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#222"></div> Páginas principales</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1a3a5c"></div> Contenido SEO / Blog</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#5a2a00"></div> Landing Pages Google Ads</div>
+</div>
+
+<div class="diagram">
+
+  <!-- HOME -->
+  <div class="level-home">
+    <a href="https://bdoors.us/" target="_blank" style="text-decoration:none;">
+      <div class="home-node">
+        <div class="node-label">Homepage</div>
+        <div class="node-title">bdoors.us</div>
+        <div class="node-slug">European interior doors · South Florida</div>
+        <div class="node-keyword">Nassau Hotel · Murano Miami Beach</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- NAV NODES -->
+  <div class="nav-level">
+    <div class="node node-products">
+      <div class="node-label">Colecciones</div>
+      <div class="node-title">Products</div>
+      <div class="node-slug">/lacquered · /wood-veneer · /laminated</div>
+      <div class="node-keyword" style="background:rgba(255,255,255,0.15); font-size:10px; padding:3px 8px; display:inline-block">3 colecciones live</div>
+    </div>
+    <div class="node node-guides">
+      <div class="node-label">SEO</div>
+      <div class="node-title">Industry Guides</div>
+      <div class="node-slug">/industry-guides/</div>
+      <div class="node-keyword" style="background:rgba(255,255,255,0.15); font-size:10px; padding:3px 8px; display:inline-block">7 artículos publicados</div>
+    </div>
+    <div class="node node-projects">
+      <div class="node-label">Portafolio</div>
+      <div class="node-title">Projects</div>
+      <div class="node-slug">/projects/</div>
+      <div class="node-keyword" style="background:rgba(255,255,255,0.15); font-size:10px; padding:3px 8px; display:inline-block">Proyectos de referencia</div>
+    </div>
+    <div class="node node-contact">
+      <div class="node-label">Conversión</div>
+      <div class="node-title">Discuss Your Project</div>
+      <div class="node-slug">/discuss-your-project/</div>
+      <div class="node-keyword" style="background:rgba(255,255,255,0.15); font-size:10px; padding:3px 8px; display:inline-block">Formulario → HubSpot CRM</div>
+    </div>
+    <div class="node node-home-link">
+      <div class="node-label">Acción directa</div>
+      <div class="node-title">Call Now</div>
+      <div class="node-slug">+1 (305) 507-9965</div>
+      <div class="node-keyword" style="background:rgba(255,255,255,0.15); font-size:10px; padding:3px 8px; display:inline-block">Contacto inmediato</div>
+    </div>
+  </div>
+
+  <!-- PRODUCT PAGES -->
+  <div class="products-section">
+    <div class="section-header">Páginas de Producto — Live ✓</div>
+    <div class="sub-grid sub-grid-3">
+      <a href="https://bdoors.us/lacquered-interior-doors/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-product">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:13px;">Lacquered Interior Doors</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5)">/lacquered-interior-doors/</div>
+          <div class="node-keyword" style="background:rgba(255,255,255,0.1); font-size:10px; padding:3px 8px; display:inline-block; margin-top:6px; color:white">En stock · Miami</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/wood-veneer-doors-miami/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-product">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:13px;">Wood Veneer Interior Doors</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5)">/wood-veneer-doors-miami/</div>
+          <div class="node-keyword" style="background:rgba(255,255,255,0.1); font-size:10px; padding:3px 8px; display:inline-block; margin-top:6px; color:white">Bajo pedido</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/laminated-doors-miami/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-product">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:13px;">Laminated Interior Doors</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5)">/laminated-doors-miami/</div>
+          <div class="node-keyword" style="background:rgba(255,255,255,0.1); font-size:10px; padding:3px 8px; display:inline-block; margin-top:6px; color:white">Bajo pedido</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- BLOG POSTS -->
+  <div class="products-section">
+    <div class="section-header">Industry Guides — 7 artículos SEO publicados ✓</div>
+    <div class="sub-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <a href="https://bdoors.us/what-is-a-frameless-interior-door-and-why-is-it-trending-in-modern-homes/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-blog">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:11px;">What Is a Frameless Interior Door?</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5); font-size:9px;">/what-is-a-frameless-interior-door/</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/how-to-read-a-door-schedule/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-blog">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:11px;">How to Read a Door Schedule</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5); font-size:9px;">/how-to-read-a-door-schedule/</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/mistakes-buying-modern-interior-doors/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-blog">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:11px;">7 Mistakes When Buying Interior Doors</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5); font-size:9px;">/mistakes-buying-modern-interior-doors/</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/interior-door-installation-south-florida/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-blog">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:11px;">Door Installation South Florida</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5); font-size:9px;">/interior-door-installation-south-florida/</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/wood-veneer-vs-lacquered-doors/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-blog">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:11px;">Wood Veneer vs Lacquered</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5); font-size:9px;">/wood-veneer-vs-lacquered-doors/</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/hotel-interior-door-specification/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-blog">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:11px;">How to Specify Doors for a Hotel</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5); font-size:9px;">/hotel-interior-door-specification/</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/interior-door-trends-miami-2026/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-blog">
+          <span class="badge badge-live">Live</span>
+          <div class="node-title" style="font-size:11px;">Interior Door Trends Miami 2026</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5); font-size:9px;">/interior-door-trends-miami-2026/</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- LANDING PAGES — NOW LIVE -->
+  <div class="products-section">
+    <div class="section-header">Landing Pages Google Ads — 5 live · Captura segmentada de leads ✓</div>
+    <div class="sub-grid" style="grid-template-columns: repeat(5, 1fr);">
+      <a href="https://bdoors.us/interior-doors-architects/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-landing">
+          <span class="badge badge-ads">Google Ads</span>
+          <div class="node-title" style="font-size:12px;">Architects</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5)">/interior-doors-architects/</div>
+          <div style="margin-top:8px; font-size:9px; background:rgba(255,255,255,0.15); padding:3px 8px; color:rgba(255,255,255,0.8); letter-spacing:0.5px;">segment: Architect</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/interior-doors-interior-designers/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-landing">
+          <span class="badge badge-ads">Google Ads</span>
+          <div class="node-title" style="font-size:12px;">Interior Designers</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5)">/interior-doors-interior-designers/</div>
+          <div style="margin-top:8px; font-size:9px; background:rgba(255,255,255,0.15); padding:3px 8px; color:rgba(255,255,255,0.8); letter-spacing:0.5px;">segment: Interior Designer</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/interior-doors-contractors/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-landing">
+          <span class="badge badge-ads">Google Ads</span>
+          <div class="node-title" style="font-size:12px;">Contractors</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5)">/interior-doors-contractors/</div>
+          <div style="margin-top:8px; font-size:9px; background:rgba(255,255,255,0.15); padding:3px 8px; color:rgba(255,255,255,0.8); letter-spacing:0.5px;">segment: Contractor</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/interior-doors-real-estate-developers/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-landing">
+          <span class="badge badge-ads">Google Ads</span>
+          <div class="node-title" style="font-size:12px;">Real Estate Developers</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5)">/interior-doors-real-estate-developers/</div>
+          <div style="margin-top:8px; font-size:9px; background:rgba(255,255,255,0.15); padding:3px 8px; color:rgba(255,255,255,0.8); letter-spacing:0.5px;">segment: Real Estate Developer</div>
+        </div>
+      </a>
+      <a href="https://bdoors.us/hotel-interior-doors/" target="_blank" style="text-decoration:none;">
+        <div class="sub-node sub-node-landing">
+          <span class="badge badge-ads">Google Ads</span>
+          <div class="node-title" style="font-size:12px;">Hospitality</div>
+          <div class="node-slug" style="color:rgba(255,255,255,0.5)">/hotel-interior-doors/</div>
+          <div style="margin-top:8px; font-size:9px; background:rgba(255,255,255,0.15); padding:3px 8px; color:rgba(255,255,255,0.8); letter-spacing:0.5px;">segment: Hospitality</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- PROJECT STATUS -->
+  <div class="flow-section" style="margin-bottom:32px;">
+    <div class="flow-title">Estado del proyecto — 13 de marzo, 2026</div>
+    <div class="flows" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="flow-card" style="border-top: 3px solid #2d6a4f;">
+        <h4 style="color:#2d6a4f;">✓ Live</h4>
+        <div class="flow-step" style="font-size:12px;">Homepage, 3 páginas de producto, Projects</div>
+        <div class="flow-step" style="font-size:12px;">Discuss Your Project con HubSpot CRM</div>
+        <div class="flow-step" style="font-size:12px;">7 artículos SEO publicados</div>
+        <div class="flow-step" style="font-size:12px;">5 landing pages segmentadas para Google Ads</div>
+      </div>
+      <div class="flow-card" style="border-top: 3px solid #2d6a4f;">
+        <h4 style="color:#2d6a4f;">✓ Configuración técnica</h4>
+        <div class="flow-step" style="font-size:12px;">Rank Math Advanced — title + meta en todas las páginas</div>
+        <div class="flow-step" style="font-size:12px;">Sitemap enviado a Google Search Console</div>
+        <div class="flow-step" style="font-size:12px;">Redirecciones 301 activas</div>
+        <div class="flow-step" style="font-size:12px;">Cloudflare Turnstile anti-spam en todos los formularios</div>
+        <div class="flow-step" style="font-size:12px;">HubSpot CRM conectado</div>
+      </div>
+      <div class="flow-card" style="border-top: 3px solid #7a5c00;">
+        <h4 style="color:#7a5c00;">⏳ Pendiente</h4>
+        <div class="flow-step" style="font-size:12px;">Google Business Profile — verificación en proceso, pendiente envío de imágenes</div>
+        <div class="flow-step" style="font-size:12px;">Google Ads — 5 campañas listas, se lanzan tras verificación del GBP</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CRM FLOW -->
+<div class="crm-section">
+  <div class="crm-title">Flujo de captura de leads — Contact Form 7 → HubSpot CRM</div>
+  <div class="crm-flow">
+    <div class="crm-step">
+      <div class="crm-icon">🌐</div>
+      <div class="crm-step-title">Landing Page</div>
+      <div class="crm-step-desc">El lead llega desde una landing page segmentada vía Google Ads</div>
+      <div class="crm-tag">Campo oculto: segmento</div>
+    </div>
+    <div class="crm-step">
+      <div class="crm-icon">📋</div>
+      <div class="crm-step-title">Contact Form 7</div>
+      <div class="crm-step-desc">Completa el formulario "Discuss Your Project"</div>
+      <div class="crm-tag">Tag automático</div>
+    </div>
+    <div class="crm-step">
+      <div class="crm-icon">📧</div>
+      <div class="crm-step-title">Email de Confirmación</div>
+      <div class="crm-step-desc">Auto-respuesta al lead + notificación interna a gonzalezpaublini@gmail.com</div>
+      <div class="crm-tag">CF7 nativo</div>
+    </div>
+    <div class="crm-step">
+      <div class="crm-icon">🔄</div>
+      <div class="crm-step-title">HubSpot CRM</div>
+      <div class="crm-step-desc">Contacto registrado automáticamente con tag de segmento</div>
+      <div class="crm-tag">Integración CF7</div>
+    </div>
+    <div class="crm-step">
+      <div class="crm-icon">📊</div>
+      <div class="crm-step-title">Pipeline</div>
+      <div class="crm-step-desc">Seguimiento por etapa: nuevo → contactado → propuesta → cierre</div>
+      <div class="crm-tag">HubSpot gratis</div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <div style="font-size:10px; font-weight:400; letter-spacing:2px; text-transform:uppercase; color:var(--light); margin-bottom:10px;">Tags de segmento — identificación automática del lead</div>
+    <div class="tag-grid">
+      <div class="tag-item"><span>TAG</span>Architect</div>
+      <div class="tag-item"><span>TAG</span>Interior Designer</div>
+      <div class="tag-item"><span>TAG</span>Contractor</div>
+      <div class="tag-item"><span>TAG</span>Real Estate Developer</div>
+      <div class="tag-item"><span>TAG</span>Hospitality</div>
+    </div>
+  </div>
+</div>
+
+<!-- LEAD IN HUBSPOT -->
+<div style="margin-top:48px; padding-top:32px; border-top:1px solid #d5cfc9;">
+  <div style="font-size:10px; font-weight:400; letter-spacing:3px; text-transform:uppercase; color:#888; margin-bottom:24px;">Cómo se ve un lead en HubSpot</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+    <div style="background:#fff; padding:24px;">
+      <div style="font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:#2d6a4f; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid #e8e4e0;">Lead desde landing page segmentada (Google Ads)</div>
+      <div style="display:grid; grid-template-columns:130px 1fr; gap:8px; font-size:12px; font-weight:300; color:#555; line-height:1.8;">
+        <span style="color:#888;">Nombre</span><span>Carlos Méndez</span>
+        <span style="color:#888;">Email</span><span>carlos@studiomdz.com</span>
+        <span style="color:#888;">Mensaje</span><span>12 puertas, residencial Coral Gables</span>
+        <span style="color:#888;">Fuente</span><span>/interior-doors-architects/</span>
+        <span style="color:#888;">Segmento</span><span style="background:#e8f0fe; color:#1a3a5c; padding:2px 10px; font-weight:600; font-size:10px; letter-spacing:1px; text-transform:uppercase;">ARCHITECT</span>
+        <span style="color:#888;">Estado</span><span style="background:#fff3e0; color:#7a5c00; padding:2px 10px; font-weight:600; font-size:10px; letter-spacing:1px; text-transform:uppercase;">NUEVO</span>
+      </div>
+    </div>
+    <div style="background:#fff; padding:24px;">
+      <div style="font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:#7a5c00; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid #e8e4e0;">Lead desde Discuss Your Project (orgánico)</div>
+      <div style="display:grid; grid-template-columns:130px 1fr; gap:8px; font-size:12px; font-weight:300; color:#555; line-height:1.8;">
+        <span style="color:#888;">Nombre</span><span>Maria Torres</span>
+        <span style="color:#888;">Email</span><span>maria@hoteldesign.com</span>
+        <span style="color:#888;">Mensaje</span><span>Renovación 45 habitaciones, cotización</span>
+        <span style="color:#888;">Fuente</span><span>/discuss-your-project/ — "I am a..."</span>
+        <span style="color:#888;">Segmento</span><span style="background:#fce4ec; color:#8B0000; padding:2px 10px; font-weight:600; font-size:10px; letter-spacing:1px; text-transform:uppercase;">HOSPITALITY</span>
+        <span style="color:#888;">Estado</span><span style="background:#fff3e0; color:#7a5c00; padding:2px 10px; font-weight:600; font-size:10px; letter-spacing:1px; text-transform:uppercase;">NUEVO</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>bdoors.us · sales@bdoors.us · +1 (305) 507-9965 · @bdoors.us</span>
+  <span>521 NW 49 St, Miami, Florida 33161</span>
+</footer>
+
+</body>
+</html>
