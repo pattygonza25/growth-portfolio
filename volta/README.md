@@ -89,7 +89,7 @@ Transactional HTML email sent from `start@getvolta.pro` via SendGrid on registra
 
 **Telegram over a native app** — No app development cost, no App Store friction, no downloads. Telegram has near-universal penetration in the target demographic. The weekly check-in takes under 2 minutes and lives where athletes already are.
 
-**Gemini 2.5 Flash over GPT or Claude (for now)** — At COP 31/user/month variable cost vs COP 227 for Claude Sonnet, Gemini Flash allows the pilot to run at near-zero marginal cost. Migration to Claude API planned for V2 when conversational quality becomes the primary differentiator.
+**Gemini 2.5 Flash over GPT or Claude (for now)** — Gemini Flash allows the pilot to run at minimal variable cost during early validation. Migration to Claude API planned for V2 when conversational quality becomes the primary differentiator at scale.
 
 **n8n over custom backend** — Full automation without a dedicated engineering team. Each workflow is independently maintainable, observable, and extensible. The entire product runs on a $12/month Digital Ocean droplet shared with a parallel project.
 
@@ -120,22 +120,6 @@ Transactional HTML email sent from `start@getvolta.pro` via SendGrid on registra
 | Checkout / Stripe | 🔄 Planned for June 2026 |
 | Claude API migration | 🔄 Planned for V2 |
 | GitHub Actions auto-deploy | 🔄 In progress |
-
----
-
-## Financial Model
-
-> Breakeven: 4 paying subscribers. Variable cost per user: COP 2.013 (Gemini + Stripe). Gross margin: ~92%.
-
-| Month | Subscribers | Revenue | Profit |
-| --- | --- | --- | --- |
-| Apr–Jun 2026 | 5–15 | — (free trial) | — |
-| Jul 2026 | 20 | COP 498.000 | COP 377.000 |
-| Sep 2026 | 65 | COP 1.618.500 | COP 1.406.000 |
-| Dec 2026 | 265 | COP 6.598.500 | COP 5.984.000 |
-| **Full year 2026** | — | **COP 17.056.500** | **COP 15.038.000** |
-
-Fixed infrastructure cost in Phase 2: COP 80.680/month (Digital Ocean + Google Workspace + domain).
 
 ---
 
